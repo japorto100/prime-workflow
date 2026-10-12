@@ -1,6 +1,6 @@
 {
   "name": "prime-workflow",
-  "version": "0.1.0",
+  "version": "0.1.0-beta.1",
   "description": "Hardened orchestration, state-machine workflows, and outcome contracts for Prime Agent",
   "private": true,
   "type": "module",

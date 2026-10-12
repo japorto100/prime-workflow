@@ -2,9 +2,15 @@
 
 > **Hardened Multi-Agent Orchestration, State-Machine Workflows, and Outcome Contracts for Prime Agent**
 
-[![Tests](https://img.shields.io/badge/tests-125%20passing-brightgreen)](#testing)
+[![Tests](https://img.shields.io/badge/tests-186%20passing-brightgreen)](#testing)
+[![Version](https://img.shields.io/badge/version-v0.1.0--beta.1-blue)](#status)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Compatible: Prime Agent v0.9.8 & v0.10+](https://img.shields.io/badge/Prime%20Agent-v0.9.8%20%7C%20v0.10%2B-orange)](#modes-of-operation)
+
+> [!WARNING]
+> **Status: Beta (v0.1.0-beta.1) — Architecture Blueprint & Community Staging Preview**
+> This repository is a preview release providing both backwards-compatibility for Prime Agent v0.9.8 (via in-process TS extension) and an architectural reference/sidecar blueprint for v0.10+ (Rust transition, addressing discussions [#3376](https://github.com/PrimeIntellect-ai/prime-agent/discussions/3376) and [#3200](https://github.com/PrimeIntellect-ai/prime-agent/discussions/3200)).
+> While core contracts have 152 TypeScript tests and 34 Python tests passing, broad multi-environment production soak testing is ongoing. Use with care in production setups.
 
 ---
 
