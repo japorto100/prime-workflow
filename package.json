@@ -1,0 +1,29 @@
+{
+  "name": "prime-workflow",
+  "version": "0.1.0",
+  "description": "Hardened orchestration, state-machine workflows, and outcome contracts for Prime Agent",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test extension/tests/*.test.mjs",
+    "test:python": "pytest skill/tests/",
+    "typecheck": "tsc -p extension/tsconfig.json",
+    "smoke": "node extension/smoke-load.mjs",
+    "server": "node extension/bin/workflow-server.mjs"
+  },
+  "keywords": [
+    "prime-agent",
+    "agentic-ai",
+    "state-machine",
+    "workflow",
+    "orchestration",
+    "harness",
+    "outcome-contracts"
+  ],
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "typescript": "^5.7.0"
+  },
+  "author": "lipfi",
+  "license": "MIT"
+}
