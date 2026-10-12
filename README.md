@@ -3,16 +3,18 @@
 > **Hardened Multi-Agent Orchestration, State-Machine Workflows, and Outcome Contracts for Prime Agent**
 
 [![Tests](https://img.shields.io/badge/tests-186%20passing-brightgreen)](#testing)
-[![Version](https://img.shields.io/badge/version-v0.1.0--beta.1-blue)](#status)
+[![Version](https://img.shields.io/badge/version-v0.1.0--beta.1%20(preview)-blue)](#status)
+[![Platform](https://img.shields.io/badge/Platform-Linux%20%7C%20macOS%20(POSIX%20only)-success)](#system-requirements)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Compatible: Prime Agent v0.9.8 & v0.10+](https://img.shields.io/badge/Prime%20Agent-v0.9.8%20%7C%20v0.10%2B-orange)](#modes-of-operation)
+[![Target](https://img.shields.io/badge/Primary%20Target-Prime%20Agent%20v0.9.8-orange)](#modes-of-operation)
 
 > [!WARNING]
-> **Status: Beta (v0.1.0-beta.1) — Architecture Blueprint & Community Staging Preview**
-> * **Work in Progress:** Diese Version befindet sich im aktiven Beta-Stadium und wurde noch nicht in breiten Praxis- und Produktionsumgebungen durchgetestet — die Weiterentwicklung und Validierung laufen kontinuierlich.
-> * **Technischer Stand:** Die Kernarchitektur befindet sich bereits auf einem fortgeschrittenen Stand (152 TypeScript- und 34 Python-Tests grün, atomare Journal-Invarianten, Claim-Leases, Torn-Tail-Recovery und kryptografisch gefrorene SHA-256-Bytes).
-> * **Community-Sharing:** Statt den Stand privat zu halten, stellen wir ihn der Prime-Community als offene Arbeitsbasis, praktische Abhilfe für v0.9.8 und als architektonischen Blueprint für den v0.10+ Rust-Übergang zur Verfügung (im Kontext der Diskussionen [#3376](https://github.com/PrimeIntellect-ai/prime-agent/discussions/3376) und [#3200](https://github.com/PrimeIntellect-ai/prime-agent/discussions/3200)).
-> * **Feedback & PRs:** Rückmeldungen, Issue-Meldungen und Pull Requests aus der Community sind ausdrücklich willkommen, wenn Interesse an diesen Verifikations- und Orchestrierungsmechanismen besteht!
+> **Status: Beta (v0.1.0-beta.1) — Early Community Preview & Architecture Blueprint**
+> * **Noch ungetestet im Produktiveinsatz:** Diese Version befindet sich im frühen Beta-Stadium. Zwar sind die Unit- und Integrationsverträge mit 152 TypeScript- und 34 Python-Tests abgedeckt, der **reale Praxiseinsatz in ausgedehnten Multi-Agenten-Sessions ist jedoch noch nicht durchgetestet** — die Erprobung und Weiterentwicklung laufen aktiv.
+> * **Betriebssystem: Nur Linux & macOS (Kein Windows!):** Das System setzt zwingend POSIX-Dateiberechtigungen (`0o600`) und Unix Domain Sockets (`bridge.sock`) voraus. **Windows wird nicht unterstützt.**
+> * **Primärer Fokus auf v0.9.8:** Dieses Repository richtet sich primär an Anwender von **Prime Agent v0.9.8**, die eine verlässliche In-Process Workflow- und State-Machine-Erweiterung suchen.
+> * **Methoden-Blueprint für v0.10+ (Kein Node.js für Rust):** Wir empfehlen *keineswegs*, Node.js in das native Rust-Ökosystem von Prime v0.10 zurückzubringen. Stattdessen dienen die hier gezeigten **Methoden und Techniken** (Append-Only Journal mit Torn-Tail Recovery, atomare Claim-Leases, `driver_epoch`-Fencing und kryptografisch gefrorene SHA-256-Bytes) als architektonischer Blueprint für eine eventuelle spätere Reimplementierung in nativem Rust.
+> * **Community-Sharing:** Wir teilen diese Basis offen mit der Community ([#3376](https://github.com/PrimeIntellect-ai/prime-agent/discussions/3376), [#3200](https://github.com/PrimeIntellect-ai/prime-agent/discussions/3200)). Feedback, Issue-Meldungen und PRs sind herzlich willkommen!
 
 ---
 
@@ -59,13 +61,24 @@ export PRIME_WORKFLOW=on
 ```
 The extension automatically spins up the bridge socket on session start (depth 0).
 
-### Mode 2: Out-of-Process Sidecar Service (Prime Agent v0.10+ & Headless CI)
-Since Prime Agent v0.10 removed in-process TypeScript extension loading ([PR #3189](https://github.com/PrimeIntellect-ai/prime-agent/pull/3189)), `prime-workflow` includes a standalone server runner:
+### Mode 2: Conceptual Reference Prototype (Prime Agent v0.10+ & Testing)
+Since Prime Agent v0.10 removed in-process TypeScript extension loading ([PR #3189](https://github.com/PrimeIntellect-ai/prime-agent/pull/3189)), `prime-workflow` provides an out-of-process prototype runner:
 ```bash
-# Start the bridge server in your project root:
+# Start the prototype bridge server in your project root:
 node extension/bin/workflow-server.mjs
 ```
-The server binds to `<repo>/.prime/workflow-state/bridge.sock`. The Python skill (`skill/`) inside Prime Agent v0.10's kernel connects directly to this socket!
+*Note: This is provided as a developer reference prototype for experimenting with the state invariants on v0.10, not as a recommendation to permanently introduce Node runtimes into Prime's Rust core.*
+
+---
+
+## System Requirements & Limitations
+
+* **Operating System:** **Linux or macOS (POSIX only)**.
+  > [!CAUTION]
+  > **Windows is NOT supported.** The communication layer relies on POSIX Unix Domain Sockets (`sockaddr_un`) and strict filesystem permissions (`0o600`).
+* **Node.js:** Node.js `>= 22.6.0` (required for native ESM type-stripping).
+* **Python:** Python `>= 3.12` (managed via `uv`).
+* **Path Length:** Standard POSIX socket paths are limited to 104–108 characters. Ensure the project root path is not excessively nested.
 
 ---
 
