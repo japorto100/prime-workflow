@@ -9,8 +9,10 @@
 
 > [!WARNING]
 > **Status: Beta (v0.1.0-beta.1) — Architecture Blueprint & Community Staging Preview**
-> This repository is a preview release providing both backwards-compatibility for Prime Agent v0.9.8 (via in-process TS extension) and an architectural reference/sidecar blueprint for v0.10+ (Rust transition, addressing discussions [#3376](https://github.com/PrimeIntellect-ai/prime-agent/discussions/3376) and [#3200](https://github.com/PrimeIntellect-ai/prime-agent/discussions/3200)).
-> While core contracts have 152 TypeScript tests and 34 Python tests passing, broad multi-environment production soak testing is ongoing. Use with care in production setups.
+> * **Work in Progress:** Diese Version befindet sich im aktiven Beta-Stadium und wurde noch nicht in breiten Praxis- und Produktionsumgebungen durchgetestet — die Weiterentwicklung und Validierung laufen kontinuierlich.
+> * **Technischer Stand:** Die Kernarchitektur befindet sich bereits auf einem fortgeschrittenen Stand (152 TypeScript- und 34 Python-Tests grün, atomare Journal-Invarianten, Claim-Leases, Torn-Tail-Recovery und kryptografisch gefrorene SHA-256-Bytes).
+> * **Community-Sharing:** Statt den Stand privat zu halten, stellen wir ihn der Prime-Community als offene Arbeitsbasis, praktische Abhilfe für v0.9.8 und als architektonischen Blueprint für den v0.10+ Rust-Übergang zur Verfügung (im Kontext der Diskussionen [#3376](https://github.com/PrimeIntellect-ai/prime-agent/discussions/3376) und [#3200](https://github.com/PrimeIntellect-ai/prime-agent/discussions/3200)).
+> * **Feedback & PRs:** Rückmeldungen, Issue-Meldungen und Pull Requests aus der Community sind ausdrücklich willkommen, wenn Interesse an diesen Verifikations- und Orchestrierungsmechanismen besteht!
 
 ---
 
@@ -27,9 +29,9 @@ Instead of ad-hoc, uncoordinated subagent spawning (`rlm.spawn`) that suffers fr
 
 ---
 
-## Comparison: prime-workflow vs. Prime Agent v0.10 Factory
+## Architectural Complement: prime-workflow & Prime Agent v0.10 Factory
 
-With Prime Agent v0.10.0, upstream introduced the "Factory" ([PR #3199](https://github.com/PrimeIntellect-ai/prime-agent/pull/3199), [#3285](https://github.com/PrimeIntellect-ai/prime-agent/pull/3285)). While Factory introduces helpful DAG syntactic sugar and TUI visual graphs, `prime-workflow` provides the **industrial hardening** that production teams require:
+With Prime Agent v0.10.0, upstream introduced the "Factory" ([PR #3199](https://github.com/PrimeIntellect-ai/prime-agent/pull/3199), [#3285](https://github.com/PrimeIntellect-ai/prime-agent/pull/3285)), offering DAG state machines and a TUI live page. `prime-workflow` focuses specifically on crash-resilient storage, concurrency fencing, and formal contract immutability. It is designed to serve both as a backwards-compatible extension for v0.9.8 and as a reference blueprint for how these resilience invariants can be natively integrated into Prime Agent's Rust core:
 
 | Feature | Upstream Factory (v0.10) | prime-workflow |
 |---|---|---|

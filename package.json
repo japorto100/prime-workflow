@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "test": "node --test extension/tests/*.test.mjs",
-    "test:python": "pytest skill/tests/",
+    "test:python": "uv run --with pytest --with pytest-asyncio pytest skill/tests/",
     "typecheck": "tsc -p extension/tsconfig.json",
     "smoke": "node extension/smoke-load.mjs",
     "server": "node extension/bin/workflow-server.mjs"
