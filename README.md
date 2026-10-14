@@ -152,6 +152,25 @@ npm run typecheck
 
 ---
 
+## Installation & Deployment (Promote into Prime Agent)
+
+The repository includes a safe, atomic promotion script that installs both the extension and skill into your local Prime Agent environment:
+
+```bash
+# 1. Dry-run: inspect what would be installed/updated without making changes
+npm run promote:dry-run
+
+# 2. Apply: backup existing copies to ~/.prime/agent/backups/ and install
+npm run promote
+
+# 3. Check: verify that your live installed copy is synchronized with the repository
+npm run promote:check
+```
+
+The script automatically sets proper POSIX permissions, maintains SHA-256 integrity, and generates audit receipts under `~/.prime/agent/receipts/`.
+
+---
+
 ## License
 
 [MIT](LICENSE) © 2026 lipfi

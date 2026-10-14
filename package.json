@@ -9,7 +9,10 @@
     "test:python": "uv run --with pytest --with pytest-asyncio pytest skill/tests/",
     "typecheck": "tsc -p extension/tsconfig.json",
     "smoke": "node extension/smoke-load.mjs",
-    "server": "node extension/bin/workflow-server.mjs"
+    "server": "node extension/bin/workflow-server.mjs",
+    "promote": "node scripts/promote.mjs --apply",
+    "promote:check": "node scripts/promote.mjs --check",
+    "promote:dry-run": "node scripts/promote.mjs"
   },
   "keywords": [
     "prime-agent",
